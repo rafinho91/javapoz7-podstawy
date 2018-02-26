@@ -12,13 +12,17 @@ public class Scope {
         // tablica liczb, definiujemy liczbe np. 3, tworzymy dwie tablice z niej z liczbami <= oraz z wiekszymi
         // zalozyc ze tablica jest posortowana i nieposortowana
 
-        int searchingNumber = 6;
-        int[] sortedArray = {1,3,5,6,7,8,9};
-        int counter = 0;
-        while (counter < sortedArray.length && sortedArray[counter] != 6) {
-            counter ++;
-        }
-        System.out.println("We have " + counter + ". smaller than " + searchingNumber);
+
+
+
+
+//        int searchingNumber = 6;
+//        int[] sortedArray = {1,3,5,6,7,8,9};
+//        int counter = 0;
+//        while (counter < sortedArray.length && sortedArray[counter] != 6) {
+//            counter ++;
+//        }
+//        System.out.println("We have " + counter + ". smaller than " + searchingNumber);
 
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("Insert size of Array");
