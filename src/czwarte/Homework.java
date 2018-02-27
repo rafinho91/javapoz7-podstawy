@@ -4,51 +4,53 @@ import java.util.Arrays;
 
 public class Homework {
 
+
     // ZADANIA NA WEEKEND
     // szyfr cezara - petla ktora wypisze znaki zakodowane i druga petla ktora to odkoduje
     // tablica liczb, definiujemy liczbe np. 3, tworzymy dwie tablice z niej z liczbami <= oraz z wiekszymi
     // zalozyc ze tablica jest posortowana i nieposortowana
 
     public static void main(String[] args) {
-//        int offset = 2;
-//        String secretMessage = "ala ma kota Z y";
-//        String expectedMessage = "cnc oc mqvc B a";
-//
-//        // kodowanie
-//        char[] chars = secretMessage.toCharArray();
-//        for (int i = 0; i < chars.length; i++) {
-//            if ((chars[i] >= 'a' && chars[i] <= 'z') || chars[i] >= 'A' && chars[i] <= 'Z' ) {
-//                if (((chars[i] + offset) > 'Z' && (chars[i] + offset) < 'a') || ((chars[i] + offset) > 'z')) {
-//                    chars[i] = (char)(chars[i] - 26 + offset);
-//                } else {
-//                    chars[i] += offset;
-//                }
-//            }
-//        }
-//        System.out.println("Expected: " + expectedMessage);
-//        System.out.println("Actual: " + String.valueOf(chars));
-//
-//        System.out.println("Correct= " + (expectedMessage.equals(String.valueOf(chars))));
+        int offset = 1;
+        String secretMessage = "ala ma kota Z y";
+        String expectedMessage = "cnc oc mqvc B a";
+
+        // kodowanie
+        char[] chars = secretMessage.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            if ((chars[i] >= 'a' && chars[i] <= 'z') || chars[i] >= 'A' && chars[i] <= 'Z' ) {
+                if (((chars[i] + offset) > 'Z' && (chars[i] + offset) < 'a') || ((chars[i] + offset) > 'z')) {
+                    chars[i] = (char)(chars[i] - 26 + offset);
+                } else {
+                    chars[i] += offset;
+                }
+            }
+        }
+        System.out.println("Expected: " + expectedMessage);
+        System.out.println("Actual: " + String.valueOf(chars));
+
+        System.out.println("Correct= " + (expectedMessage.equals(String.valueOf(chars))));
 //
 //        // ODKODOWANIE
-//
-//        int offsetDecode = 1;
-//        String codedMessage = "amb nb lpub A z";
-//
-//        char[] charsOfCodedMessage = codedMessage.toCharArray();
-//        for (int i = 0; i < charsOfCodedMessage.length; i++) {
-//            if ((charsOfCodedMessage[i] >= 'a' && charsOfCodedMessage[i] <= 'z') || charsOfCodedMessage[i] >= 'A' && charsOfCodedMessage[i] <= 'Z' ) {
-//                if (chars[i] == 'a' || chars[i] == 'A') {
-//                    charsOfCodedMessage[i] = (char)(charsOfCodedMessage[i] + 26 - offsetDecode);
-//                } else {
-//                    charsOfCodedMessage[i] -= offsetDecode;
-//                }
-//            }
-//        }
-//        System.out.println("Secret: " + secretMessage);
-//        System.out.println("Actual: " + String.valueOf(charsOfCodedMessage));
-//
-//        System.out.println("Correct= " + (codedMessage.equals(String.valueOf(charsOfCodedMessage))));
+
+        int offsetDecode = 1;
+        String codedMessage = String.valueOf(chars);
+
+        char[] charsOfCodedMessage = codedMessage.toCharArray();
+        for (int i = 0; i < charsOfCodedMessage.length; i++) {
+            if ((charsOfCodedMessage[i] >= 'a' && charsOfCodedMessage[i] <= 'z') || charsOfCodedMessage[i] >= 'A' && charsOfCodedMessage[i] <= 'Z' ) {
+                if (charsOfCodedMessage[i] == 'a' || charsOfCodedMessage[i] == 'A') {
+                    charsOfCodedMessage[i] = (char)(charsOfCodedMessage[i] + 26 - offsetDecode);
+                } else {
+                    charsOfCodedMessage[i] -= offsetDecode;
+                }
+            }
+        }
+        System.out.println("Coded: " + codedMessage);
+        System.out.println("Expected: " + secretMessage);
+        System.out.println("Actual: " + String.valueOf(charsOfCodedMessage));
+
+        System.out.println("Correct= " + (codedMessage.equals(String.valueOf(charsOfCodedMessage))));
 
 
         // tablica liczb, definiujemy liczbe np. 3, tworzymy dwie tablice z niej z liczbami <= oraz z wiekszymi
