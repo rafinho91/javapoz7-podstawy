@@ -1,17 +1,21 @@
 package szoste;
 
+import java.util.Arrays;
+
 public class Methods {
     public static void main(String[] args) {
         // silnia z jakiejs liczby long
         // zamiana jednego znaku na drugi w danym stringu w tekscie wszystkie znaki old na new
         // zliczamy liczby podzielne przez 2 ale nie podzielne przez 3
+        // sprawdzenie czy string jest liczba
+        // czy tekst jest polidromem
+        // zamiana wielkosci wszystkich liter
         // split -> text, delimiter
         // ciag fibonacciego
-        // sprawdzenie czy string jest liczba
         // sprawdzenie nawiasow w stringu
         // metoda do porownania dwoch stringow ktore sa liczbami
         // rozlozenie na sume liczb pierwszych danej liczby
-        // czy tekst jest polidromem
+
 
         int number = 4;
         System.out.println("Factorial of number " + number + " is: " + factorial(number));
@@ -27,13 +31,161 @@ public class Methods {
 
         String possiblePalindrom = "Kobylamamalybok";
         System.out.println("Is " + possiblePalindrom + " a palindrom? " + palindrom(possiblePalindrom));
+
+        char c = 'z';
+        System.out.println(c + " - switched is - " + switchChar(c));
+        String textCase =  "Ala Ma Kota";
+        System.out.println(textCase + " - switched case is - "+ switchCase(textCase));
+
+        System.out.println("a;b;c 0 (-1) = " + getNthIndexOf(';',"a;b;c", 0));
+        System.out.println("a;b;c 1 (1) = " + getNthIndexOf(';',"a;b;c", 1));
+        System.out.println("a;b;c 2 (3) = " + getNthIndexOf(';',"a;b;c", 2));
+        System.out.println("a;b;c 3 (5) = " + getNthIndexOf(';',"a;b;c", 3));
+
+        System.out.println("\"Ala ma kota\" split = " + Arrays.toString(split("Ala ma kota ",' ')));
+        System.out.println("\"Ala ma kota\" split2 = " + Arrays.toString(split2("Ala ma kota ",' ')));
+
+        int numberFib = 6;
+        System.out.println("Fibonacci on position " + numberFib + ". = " + fibonacciRalf(numberFib));
+        System.out.println("Fibonacci on position " + numberFib + ". = " + fibonacciNumber(numberFib));
+        System.out.println("Fibonacci array for " + numberFib + " positions is " + Arrays.toString(fibonacciArray(numberFib)));
+
+        String textToSwap = "Aleksandra";
+        System.out.println(reverse(textToSwap));
+
+        String statement = "3+(3*3)/(5-5-(-7))";
+        System.out.println(statement + " Is valid? : " + isValidStatement(statement));
+
+    }
+
+    public static boolean isValidStatement(String statement){
+        char[] chars = statement.toCharArray();
+        int i = 0;
+        int counter = 0;
+        while (counter >= 0 && i < chars.length){
+            if (chars[i] == '('){
+                counter++;
+            } else if(chars[i] == ')'){
+                counter--;
+            }
+            i++;
+        }
+        return counter == 0;
+    }
+
+    public static String reverse(String text){
+        char[] chars = text.toCharArray();
+        for (int i = 0; i < chars.length/2; i++) {
+            char tmp = chars[i];
+            chars[i] = chars[chars.length-1-i];
+            chars[chars.length-1-i] = tmp;
+        }
+        return String.valueOf(chars);
+    }
+
+    public static int[] fibonacciArray(int n){
+        if(n <= 1){
+            int[] array = {0};
+            return array;
+        }
+        int[] array = new int[n];
+        array[0] = 0;
+        array[1] = 1;
+//        for (int i = 2; i < n; i++) {
+//            array[i-1] = fibonacciNumber(i);
+//        }
+        for (int i = 2; i < array.length; i++) {
+            array[i] = array[i-1] + array[i-2];
+        }
+        return array;
+    }
+
+    public static int fibonacciNumber(int n){
+        if(n <= 1) return 0;
+        int first = 0;
+        int second = 1;
+        for (int i = 2; i < n; i++) {
+            int next = first + second;
+            first = second;
+            second = next;
+        }
+        return second;
+    }
+
+    public static int fibonacciRalf(int n){
+        if(n <= 1) return 0;
+        int[] array = new int[n];
+        array[0] = 0;
+        array[1] = 1;
+        for (int i = 0; i < array.length-2; i++) {
+                array[i+2] = array[i+1] + array[i];
+        }
+        return array[n-1];
+    }
+
+    public static String[] split2(String message, char c){
+        int size = Warmup.lettersCounter(message,c) + 1;
+        String[] resultArray = new String[size];
+        int start = 0;
+        for (int i = 0; i < resultArray.length; i++) {
+            String textToPut = "";
+            int end = getNthIndexOf(c,message,(i+1));
+            for (int j = start; j < end; j++) {
+                textToPut += message.charAt(j);
+            }
+            resultArray[i] = textToPut;
+            start = end + 1;
+        }
+        return resultArray;
     }
 
     public  static String[] split(String message, char c) {
-        String[] array = new String[Warmup.lettersCounter(message,c)];
-        int start = 0;
- //       int end = getNIndexOf(c, message, 0);
-        return array;
+        int size = Warmup.lettersCounter(message,c) + 1;
+        String[] resultArray = new String[size];
+        String textToPut = "";
+        int j = 0;
+        for (int i = 0; i < message.length(); i++) {
+            if (message.charAt(i) != c) {
+                textToPut += message.charAt(i);
+                if (i == message.length()-1){
+                    resultArray[j] = textToPut;
+                }
+            } else {
+                resultArray[j] = textToPut;
+                j++;
+                textToPut = "";
+            }
+        }
+        return resultArray;
+    }
+
+    public static int getNthIndexOf(char c, String text, int index){
+        char[] chars = text.toCharArray();
+        int i = -1;
+        while (i < chars.length && index > 0) {
+            i++;
+            if (i < chars.length && c == chars[i]){
+                index--;
+            }
+        }
+        return i;
+    }
+
+    public static String switchCase(String text){
+        char[] chars = text.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            chars[i] = switchChar(chars[i]);
+        }
+        return String.valueOf(chars);
+    }
+
+    public static char switchChar(char c){
+        if (c >= 'a' && c <= 'z'){
+            c = (char)(c-(97 - 65));
+        } else if(c >= 'A' && c <= 'Z'){
+            c = (char)(c+(97 - 65));
+        }
+        return c;
     }
 
     public static boolean palindrom(String text){
