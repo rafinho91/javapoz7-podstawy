@@ -56,6 +56,92 @@ public class Methods {
         String statement = "3+(3*3)/(5-5-(-7))";
         System.out.println(statement + " Is valid? : " + isValidStatement(statement));
 
+        System.out.println("Reversed array [1,2,3,4,5] = " + Arrays.toString(reversedArray(new int[]{1,2,3,4,5})));
+
+        System.out.println("\n" + tree(5));
+
+        System.out.println("Compare: \"1234\" and \"1234\" = \t" + compareStringNumbers("1234", "1234"));
+
+        int primNumber = 23;
+        primarySum(primNumber);
+        System.out.println("Number " + primNumber + " is a sum of primaries = " + primaryNumbersOf(primNumber));
+
+    }
+
+    public static String primaryNumbersOf(int number){
+        int[] primaryNumbers = {1,2,3,5,7,11};
+        StringBuilder sumOfPrimaries = new StringBuilder();
+        for (int i = primaryNumbers.length - 1; i >= 0 ; i--) {
+            while (number >= primaryNumbers[i]){
+                number -= primaryNumbers[i];
+                sumOfPrimaries.append(primaryNumbers[i] + " + ");
+            }
+        }
+        return sumOfPrimaries.substring(0,sumOfPrimaries.length() - 2);
+    }
+
+    public static void primarySum(int number){
+        int[] primaryNumbers = {1,2,3,5,7,11};
+        int i = primaryNumbers.length - 1;
+        int temp = 0;
+        int newNumber = number;
+        StringBuilder sumOfPrimaries = new StringBuilder();
+        while (i >= 0) {
+            temp = newNumber - primaryNumbers[i];
+            if (temp < 0) {
+                i--;
+            } else if (temp > 0) {
+                sumOfPrimaries.append(primaryNumbers[i] + " + ");
+                newNumber = temp;
+            }else{
+                sumOfPrimaries.append(primaryNumbers[i]);
+                i = -1;
+            }
+        }
+        System.out.println("Number " + number + " is a sum of primaries = " + sumOfPrimaries);
+    }
+
+    public static int compareStringNumbers(String firstNumber, String secondNumber){
+        int result = 0;
+        if (firstNumber.length() > secondNumber.length()){
+            result = 1;
+        }else if(firstNumber.length() < secondNumber.length()){
+            result = -1;
+        }else{
+            int i = 0;
+            while(i < firstNumber.length() && result == 0){
+                if(firstNumber.charAt(i) > secondNumber.charAt(i)){
+                    result = 1;
+                }else if(firstNumber.charAt(i) < secondNumber.charAt(i)){
+                    result = -1;
+                }
+                i++;
+            }
+        }
+        return result;
+    }
+
+    //drzewko, -- immutability of String --
+    public static String tree(int height){
+        StringBuilder treeBuilder = new StringBuilder();
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < height - 1 - i; j++) {
+                treeBuilder.append(" ");
+            }
+            for (int j = 0; j < 2 * i + 1; j++) {
+                treeBuilder.append("*");
+            }
+            treeBuilder.append("\n");
+        }
+        return treeBuilder.toString();
+    }
+
+    public static int[] reversedArray(int[] array){
+        int[] newArray = new int[array.length];
+        for (int i = 0; i < array.length; i++) {
+            newArray[i] = array[array.length - 1 - i];
+        }
+        return newArray;
     }
 
     public static boolean isValidStatement(String statement){
