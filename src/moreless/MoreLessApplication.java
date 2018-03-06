@@ -40,7 +40,6 @@ public class MoreLessApplication {
         for (int i = 0; i < 100; i++) {
             sum += smartBot(getRandomNumber());
         }
-
         System.out.println("Smart bot average result from 100. games is: -" + sum/100);
     }
 
@@ -80,22 +79,6 @@ public class MoreLessApplication {
         }while(compare(guess, randomNumber) != 0);
 //        System.out.println("Dummy bot result: -" + counter);
         return counter;
-
-//        int randomNumber = getRandomNumber();
-//        int result = 1;
-//        int guess;
-//        do{
-//            guess = random.nextInt();
-//            if (guess > randomNumber){
-//                System.out.println("The number is too big");
-//                result++;
-//            } else if (guess < randomNumber){
-//                System.out.println("The number is too small");
-//                result++;
-//            }
-//        }while(guess != randomNumber);
-//        System.out.println("You won. Your result: -" + result + " points");
-
     }
 
     private static void showRules() {
@@ -109,7 +92,6 @@ public class MoreLessApplication {
         scanner.nextLine();
         int randomNumber = getRandomNumber();
         guessTips(scanner, randomNumber);
-
 
 //        System.out.println("Press any key to continue..");
 //        scanner.nextLine();

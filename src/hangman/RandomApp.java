@@ -8,9 +8,19 @@ public class RandomApp {
     public static void main(String[] args) {
         System.out.println(Arrays.toString(randomArray(10)));
         System.out.println(Arrays.toString(usersRandomArray()));
+        randomArrayOfEvenNumbers();
     }
 
     // 10 losowych liczb parzystych z zakresu 0 - 10 wlacznie
+
+    public static void randomArrayOfEvenNumbers() {
+        int[] array = new int[10];
+        Random random = new Random();
+        for (int i = 0; i < 10; i++) {
+            array[i] = random.nextInt(6) * 2;
+        }
+        System.out.println(Arrays.toString(array));
+    }
 
     public static void sum(){
         int[] array = randomArray(5);
