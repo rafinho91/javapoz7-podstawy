@@ -13,7 +13,7 @@ public class HangManApp {
         do {
             System.out.println();
             System.out.println("1. Start");
-            System.out.println("2. About");
+            System.out.println("2. High scores");
             System.out.println("0. Exit");
             System.out.println();
             Scanner scanner = new Scanner(System.in);
