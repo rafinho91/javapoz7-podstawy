@@ -30,8 +30,12 @@ public class BookstoreApplication {
         } while(answer !=0);
     }
 
-    public static void addBook(Scanner scanner) {
+    public static void addBook(Scanner scanner, Book[] books) {
+        System.out.println("Insert index");
+        int index = scanner.nextInt();
+        scanner.nextLine();
         System.out.println("Insert title of the new book");
+//        books[index]("Lol", 1950)  = scanner.nextLine();
 
     }
 
