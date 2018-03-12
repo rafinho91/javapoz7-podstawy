@@ -1,45 +1,59 @@
 package oop.calendar;
 
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.time.Month;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 // fabryka/ metoda fabrykujaca - statyczna metoda w danej klasie
 // LocalDate klasa
+// static nie wywolujemy na rzecz obiektu tylko na rzecz klasy, jest dla kazdego obiektudanej klasy taka sama
+
 
 public class CalendarMonth {
-    // static nie wywolujemy na rzecz obiektu tylko na rzecz klasy, jest dla kazdego obiektudanej klasy taka sama
     private static final char[] weekDaysShortcuts = {'M', 'T', 'W', 'T', 'F', 'S', 'S'};
 
-    private final String name;
-    private CalendarDay[] days;
-    private int startingWeekDay;
-    // metoda fabrykujaca
+    public static CalendarMonth currentMonth() {
+//        LocalDate now = LocalDate.now();
+        return CalendarMonth.ofLocalDate(LocalDate.now());
+    }
+
+    public static CalendarMonth ofMonth(int year, int month) {
+//        LocalDate date = LocalDate.of(year, month, 1);
+        return CalendarMonth.ofLocalDate(LocalDate.of(year, month, 1));
+    }
+
+    public static CalendarMonth ofLocalDate(LocalDate date) {
+        String monthName = date.getMonth().getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault());
+        int year = date.getYear();
+        int month = date.getMonth().getValue();
+        int numberOfDays = date.lengthOfMonth();
+        int startingWeekDay = LocalDate.of(year, month, 1).getDayOfWeek().getValue();
+        return CalendarMonth.of(monthName, year, month, numberOfDays, startingWeekDay);
+    }
+
     public static CalendarMonth of(String name, int year, int month, int numberOfDays, int startingWeekDay) {
         CalendarMonth calendarMonth = new CalendarMonth(name);
         calendarMonth.startingWeekDay = startingWeekDay;
         calendarMonth.days = createCalendarDays(year, month, numberOfDays);
-        return  calendarMonth;
+        calendarMonth.year = year;
+        calendarMonth.month = month;
+        return calendarMonth;
     }
-
-    public static CalendarMonth ofCurrentMonth(LocalDate localDate, int option){
-        CalendarMonth calendarMonth = new CalendarMonth(localDate.plusMonths(option).getMonth().toString());
-        calendarMonth.startingWeekDay = localDate.plusMonths(option).withDayOfMonth(1).getDayOfWeek().getValue();
-        calendarMonth.days = createCalendarDays(localDate.plusMonths(option).getYear(), localDate.plusMonths(option).getMonthValue(), localDate.plusMonths(option).lengthOfMonth());
-        return  calendarMonth;
-    }
-
-    public CalendarDay getCalendarDay(int dayNumber) {
-        return  days[dayNumber-1];
-    }
-
 
     private static CalendarDay[] createCalendarDays(int year, int month, int numberOfDays) {
         CalendarDay[] days = new CalendarDay[numberOfDays];
         for (int i = 0; i < numberOfDays; i++) {
-            days[i] = new CalendarDay(i+1, month, year);
+            days[i] = new CalendarDay(year, month, i + 1);
         }
         return days;
     }
+
+    private final String name;
+    private CalendarDay[] days;
+    private int startingWeekDay;
+    private int year;
+    private int month;
 
     public CalendarMonth(String name) {
         this.name = name;
@@ -51,43 +65,24 @@ public class CalendarMonth {
         this.startingWeekDay = startingWeekDay;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(name.toUpperCase()).append("\n");
-        appendHorizontalLine(builder);
-        for (int i = 0; i < weekDaysShortcuts.length; i++) {
-            builder.append(weekDaysShortcuts[i]).append("   ");
-        }
-        builder.append("\n");
-        appendHorizontalLine(builder);
-
-        for (int i = 0; i < startingWeekDay-1; i++) {
-            builder.append("    ");
-        }
-        for (int i = 0; i < days.length; i++) {
-            if ((i + startingWeekDay - 1) % 7 == 0){
-                builder.append("\n");
-            }
-            builder.append(createCalendarDayElement(days[i]));
-        }
-        builder.append("\n");
-        appendHorizontalLine(builder);
-        return builder.toString();
+    public int getYear() {
+        return year;
     }
 
-    private void appendHorizontalLine(StringBuilder builder) {
-        for (int i = 0; i < 7 * 4; i++) {
-            builder.append("-");
-        }
-        builder.append("\n");
+    public void setYear(int year) {
+        this.year = year;
     }
 
-    private  String createCalendarDayElement(CalendarDay calendarDay) {
-        String calendarDayRepresentation = "" + calendarDay.getDay();
-        calendarDayRepresentation += calendarDay.hasNote() ? "*" : " ";
-        calendarDayRepresentation += calendarDay.getDay() >= 10 ? " " : "  ";
-        return calendarDayRepresentation;
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public CalendarDay getCalendarDay(int dayNumber) {
+        return days[dayNumber - 1];
     }
 
     public String getName() {
@@ -110,7 +105,46 @@ public class CalendarMonth {
         this.startingWeekDay = startingWeekDay;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(name.toUpperCase()).append("\n");
+        appendHorizontalLine(builder);
+        for (int i = 0; i < weekDaysShortcuts.length; i++) {
+            builder.append(weekDaysShortcuts[i]).append("   ");
+        }
+        builder.append("\n");
+        appendHorizontalLine(builder);
+
+        for (int i = 0; i < startingWeekDay - 1; i++) {
+            builder.append("    ");
+        }
+        for (int i = 0; i < days.length; i++) {
+            if ((i + startingWeekDay - 1) % 7 == 0) {
+                builder.append("\n");
+            }
+            builder.append(createCalendarDayElement(days[i]));
+        }
+        builder.append("\n");
+        appendHorizontalLine(builder);
+        return builder.toString();
+    }
+
+    private void appendHorizontalLine(StringBuilder builder) {
+        for (int i = 0; i < 7 * 4; i++) {
+            builder.append("-");
+        }
+        builder.append("\n");
+    }
+
+    private String createCalendarDayElement(CalendarDay calendarDay) {
+        String calendarDayRepresentation = "" + calendarDay.getDay();
+        calendarDayRepresentation += calendarDay.hasNote() ? "*" : " ";
+        calendarDayRepresentation += calendarDay.getDay() >= 10 ? " " : "  ";
+        return calendarDayRepresentation;
+    }
+
     public void setNoteForDay(String note, int dayNumber) {
-        days[dayNumber-1].setNotes(note);
+        days[dayNumber - 1].setNotes(note);
     }
 }

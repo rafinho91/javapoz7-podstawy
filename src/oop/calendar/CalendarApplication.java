@@ -6,24 +6,17 @@ import java.util.Scanner;
 public class CalendarApplication {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        LocalDate now = LocalDate.now();
-//        int month = now.getMonthValue();
-//        String monthName = now.getMonth().toString();
-//        int year = now.getYear();
-//        int numberOfDays = now.lengthOfMonth();
-//        int startingWeekDay = now.withDayOfMonth(1).getDayOfWeek().getValue();
-//        int day = now.getDayOfMonth();
+//        LocalDate now = LocalDate.now();
         int answer;
-        int option = 0;
+//        int option = 0;
+        CalendarMonth calendarMonth = CalendarMonth.currentMonth();
 
         do {
-//            CalendarMonth calendarMonth = CalendarMonth.of(monthName, year, month, numberOfDays, startingWeekDay);
-            CalendarMonth calendarMonth = CalendarMonth.ofCurrentMonth(now,option);
-            System.out.println(calendarMonth.getName());
+//            CalendarMonth calendarMonth = CalendarMonth.offsetMonth(now,option);
             System.out.println("==== CALENDAR APPLICATION =====");
             System.out.println();
             System.out.println("1. Show month - " + calendarMonth.getName()); //TODO
-            System.out.println("2. Switch month "); //TODO
+            System.out.println("2. Switch month {year month}"); //TODO
             System.out.println("3. Next month"); //todo
             System.out.println("4. Previous month"); //todo
             System.out.println("0. Exit");
@@ -35,19 +28,27 @@ public class CalendarApplication {
             switch(answer) {
                 case 1:
                     showMonth(scanner, calendarMonth);
+                    scanner.nextLine();
                     break;
                 case 2:
-                    option = switchMonth(scanner);
+                    int year = scanner.nextInt();
+                    int month = scanner.nextInt();
+                    calendarMonth = CalendarMonth.ofMonth(year, month);
+                    scanner.nextLine();
                     break;
                 case 3:
-                    option++;
-                    CalendarMonth nextMonth = CalendarMonth.ofCurrentMonth(now,option);
-                    showMonth(scanner, nextMonth);
+                    int currentMonth = calendarMonth.getMonth();
+                    int nextYear = calendarMonth.getYear() + (currentMonth == 12 ? 1 : 0);
+                    int nextMonth = currentMonth == 12 ? 1 : currentMonth + 1;
+                    calendarMonth = CalendarMonth.ofMonth(nextYear, nextMonth);
+                    scanner.nextLine();
                     break;
                 case 4:
-                    option--;
-                    CalendarMonth previousMonth = CalendarMonth.ofCurrentMonth(now,option);
-                    showMonth(scanner, previousMonth);
+                    int actualMonth = calendarMonth.getMonth();
+                    int previousYear = calendarMonth.getYear() + (actualMonth == 1 ? -1 : 0);
+                    int previousMonth = actualMonth == 1 ? 12 : actualMonth - 1;
+                    calendarMonth = CalendarMonth.ofMonth(previousYear, previousMonth);
+                    scanner.nextLine();
                     break;
                     default:
                         System.out.println("Invalid command");
@@ -58,8 +59,8 @@ public class CalendarApplication {
 
     private static int switchMonth(Scanner scanner) {
         System.out.println("How many months you want to switch? ");
-        int option = scanner.nextInt();
-        return option;
+        int offset = scanner.nextInt();
+        return offset;
     }
 
     private static void showMonth(Scanner scanner, CalendarMonth calendarMonth) {
