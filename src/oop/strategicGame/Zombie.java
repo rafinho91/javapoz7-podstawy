@@ -10,7 +10,7 @@ public class Zombie implements Monster {
     public Zombie(String name, double power) {
         this.name = name;
         this.power = power;
-        this.health = (int)(30 * power);
+        this.health = (int)(200 * power);
 
     }
 

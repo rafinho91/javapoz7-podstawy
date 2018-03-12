@@ -1,9 +1,15 @@
 package oop.strategicGame;
+
+import java.util.Arrays;
+
 // napisac gre - kupowanie jednostek i walka //todo
 public class StrategicGame {
     public static void main(String[] args) {
-        Monster[] squadA = {new Soldier("blue",2), new Soldier("yellow", 3)};
-        Monster[] squadB = {new Zombie("blue",1), new Soldier("bad", 4)};
+        Monster[] monsterGallery = {new Soldier("Weak Soldier",1), new Soldier("Strong Soldier", 3),
+                                    new Zombie("Weak Zombie",1), new Zombie("Strong Zombie", 3)};
+
+        Monster[] squadA = {new Soldier("blue",2), new Soldier("yellow", 4)};
+        Monster[] squadB = {new Zombie("blue",6), new Soldier("bad", 2)};
 
         showArmy(squadA);
         showArmy(squadB);
