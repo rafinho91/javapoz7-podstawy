@@ -1,5 +1,6 @@
 package oop.calendar;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 
 // fabryka/ metoda fabrykujaca - statyczna metoda w danej klasie
@@ -19,6 +20,18 @@ public class CalendarMonth {
         calendarMonth.days = createCalendarDays(year, month, numberOfDays);
         return  calendarMonth;
     }
+
+    public static CalendarMonth ofCurrentMonth(LocalDate localDate, int option){
+        CalendarMonth calendarMonth = new CalendarMonth(localDate.plusMonths(option).getMonth().toString());
+        calendarMonth.startingWeekDay = localDate.plusMonths(option).withDayOfMonth(1).getDayOfWeek().getValue();
+        calendarMonth.days = createCalendarDays(localDate.plusMonths(option).getYear(), localDate.plusMonths(option).getMonthValue(), localDate.plusMonths(option).lengthOfMonth());
+        return  calendarMonth;
+    }
+
+    public CalendarDay getCalendarDay(int dayNumber) {
+        return  days[dayNumber-1];
+    }
+
 
     private static CalendarDay[] createCalendarDays(int year, int month, int numberOfDays) {
         CalendarDay[] days = new CalendarDay[numberOfDays];
