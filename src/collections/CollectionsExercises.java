@@ -16,7 +16,7 @@ public class CollectionsExercises {
 //        randomUnique(list);
 //        showUsersUniqueNumbers();
 
-        usersDatabase();
+//        usersDatabase();
 
 //        bookDatabase();
 
